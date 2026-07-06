@@ -1,825 +1,295 @@
 """
-============================================================
+===============================================================================
 File    : 08_boolean_logic.py
-Project : Enterprise Employee Compliance &
-          Access Management System
-
-Part 1 : Employee Registration & Identity Verification
+Project : Smart Login & Access Verification System
+Author  : Krishna Panchal
 
 Concepts Covered
 ----------------
-✔ Boolean Data Type
-✔ Boolean Expressions
-✔ and
-✔ or
-✔ not
-✔ Boolean Variables
-✔ Input Validation
-✔ Membership Testing
-============================================================
+✓ Variables
+✓ Data Types
+✓ Type Casting
+✓ User Input
+✓ String Operations
+✓ Boolean Logic
+===============================================================================
 """
 
-print("=" * 75)
-print("ENTERPRISE EMPLOYEE COMPLIANCE & ACCESS MANAGEMENT SYSTEM")
-print("=" * 75)
+print("=" * 80)
+print("SMART LOGIN & ACCESS VERIFICATION SYSTEM")
+print("=" * 80)
 
-# ---------------------------------------------------------
-# COMPANY CONFIGURATION
-# ---------------------------------------------------------
+# ------------------------------------------------------------------------------
+# USER DETAILS
+# ------------------------------------------------------------------------------
 
-VALID_DEGREES = {
-    "BTECH",
-    "BE",
-    "MTECH",
-    "ME",
-    "MSC",
-    "BSC"
-}
+full_name = input("Enter Full Name             : ").title()
 
-VALID_DEPARTMENTS = {
-    "AI",
-    "ML",
-    "DATA",
-    "WEB",
-    "CLOUD",
-    "CYBER"
-}
+username = input("Enter Username              : ").strip()
 
-VALID_CLEARANCE = {
-    "L1",
-    "L2",
-    "L3"
-}
+password = input("Enter Password              : ")
 
-# ---------------------------------------------------------
-# EMPLOYEE REGISTRATION
-# ---------------------------------------------------------
+email = input("Enter Email Address         : ").strip().lower()
 
-print("\nEMPLOYEE REGISTRATION")
-print("-" * 75)
+phone = input("Enter Phone Number          : ").strip()
 
-employee_id = input("Employee ID              : ").upper()
+age = int(input("Enter Age                   : "))
 
-employee_name = input("Employee Name            : ").title()
+country = input("Enter Country               : ").title()
 
-age = int(input("Age                      : "))
+# ------------------------------------------------------------------------------
+# ACCOUNT INFORMATION
+# ------------------------------------------------------------------------------
 
-degree = input(
-    "Highest Degree           : "
-).upper()
+print("\nAccount Information")
 
-department = input(
-    "Department (AI/ML/DATA/WEB/CLOUD/CYBER): "
-).upper()
+is_registered = input(
+    "Registered User (yes/no) : "
+).strip().lower() == "yes"
 
-experience = float(
-    input("Years of Experience      : ")
-)
+is_email_verified = input(
+    "Email Verified (yes/no)  : "
+).strip().lower() == "yes"
 
-salary = float(
-    input("Expected Salary (₹)      : ")
-)
+is_phone_verified = input(
+    "Phone Verified (yes/no)  : "
+).strip().lower() == "yes"
 
-security_clearance = input(
-    "Security Clearance (L1/L2/L3): "
-).upper()
+is_two_factor_enabled = input(
+    "2FA Enabled (yes/no)     : "
+).strip().lower() == "yes"
 
-nationality = input(
-    "Nationality              : "
-).title()
+is_premium_member = input(
+    "Premium Member (yes/no)  : "
+).strip().lower() == "yes"
 
-background_verified = (
-    input(
-        "Background Verified (yes/no): "
-    )
-    .strip()
-    .lower() == "yes"
-)
+is_employee = input(
+    "Company Employee (yes/no): "
+).strip().lower() == "yes"
 
-blacklisted = (
-    input(
-        "Blacklisted (yes/no): "
-    )
-    .strip()
-    .lower() == "yes"
-)
+is_admin = input(
+    "Administrator (yes/no)   : "
+).strip().lower() == "yes"
 
-# ---------------------------------------------------------
-# SKILLS
-# ---------------------------------------------------------
-
-skills = input(
-    "\nEnter Skills (comma separated): "
-).lower().split(",")
-
-skills = [skill.strip() for skill in skills]
-
-# ---------------------------------------------------------
+# ------------------------------------------------------------------------------
 # BOOLEAN VALIDATIONS
-# ---------------------------------------------------------
+# ------------------------------------------------------------------------------
 
-age_valid = age >= 18
+username_valid = len(username) >= 5
 
-degree_valid = degree in VALID_DEGREES
+password_valid = len(password) >= 8
 
-department_valid = department in VALID_DEPARTMENTS
-
-clearance_valid = security_clearance in VALID_CLEARANCE
-
-experience_valid = experience >= 2
-
-salary_valid = salary <= 120000
-
-citizenship_valid = nationality == "Indian"
-
-identity_verified = (
-    age_valid
-    and degree_valid
-    and citizenship_valid
+email_valid = (
+    "@" in email and
+    "." in email
 )
 
-security_verified = (
-    background_verified
-    and not blacklisted
-    and clearance_valid
+phone_valid = (
+    phone.isdigit() and
+    len(phone) == 10
 )
 
-basic_eligibility = (
-    identity_verified
-    and security_verified
-    and experience_valid
+adult_user = age >= 18
+
+eligible_for_login = (
+    is_registered and
+    username_valid and
+    password_valid and
+    email_valid and
+    is_email_verified and
+    phone_valid and
+    is_phone_verified and
+    adult_user
 )
 
-# ---------------------------------------------------------
-# SKILL VALIDATION
-# ---------------------------------------------------------
-
-knows_python = "python" in skills
-
-knows_sql = "sql" in skills
-
-knows_git = "git" in skills
-
-knows_linux = "linux" in skills
-
-technical_foundation = (
-    knows_python
-    and knows_sql
+premium_access = (
+    eligible_for_login and
+    is_premium_member
 )
 
-advanced_candidate = (
-    technical_foundation
-    and knows_git
-    and knows_linux
+employee_portal = (
+    eligible_for_login and
+    is_employee
 )
 
-# ---------------------------------------------------------
-# BOOLEAN SUMMARY
-# ---------------------------------------------------------
-
-print("\n" + "=" * 75)
-print("BOOLEAN VALIDATION REPORT")
-print("=" * 75)
-
-print(f"Age Validation              : {age_valid}")
-print(f"Degree Validation           : {degree_valid}")
-print(f"Department Validation       : {department_valid}")
-print(f"Security Clearance Valid    : {clearance_valid}")
-print(f"Experience Validation       : {experience_valid}")
-print(f"Salary Validation           : {salary_valid}")
-print(f"Citizenship Validation      : {citizenship_valid}")
-
-print("-" * 75)
-
-print(f"Identity Verified           : {identity_verified}")
-print(f"Security Verified           : {security_verified}")
-print(f"Basic Eligibility           : {basic_eligibility}")
-
-print("-" * 75)
-
-print(f"Knows Python                : {knows_python}")
-print(f"Knows SQL                   : {knows_sql}")
-print(f"Knows Git                   : {knows_git}")
-print(f"Knows Linux                 : {knows_linux}")
-
-print("-" * 75)
-
-print(f"Technical Foundation        : {technical_foundation}")
-print(f"Advanced Candidate          : {advanced_candidate}")
-
-# ---------------------------------------------------------
-# BOOLEAN ARITHMETIC
-# ---------------------------------------------------------
-
-compliance_score = sum([
-    age_valid,
-    degree_valid,
-    department_valid,
-    clearance_valid,
-    experience_valid,
-    salary_valid,
-    citizenship_valid,
-    background_verified,
-    technical_foundation,
-    advanced_candidate
-])
-
-print("\n" + "=" * 75)
-print("PRELIMINARY COMPLIANCE SCORE")
-print("=" * 75)
-
-print(f"Compliance Score : {compliance_score}/10")
-
-# ==========================================================
-# PART 2 : ACCESS CONTROL & DEPARTMENT ELIGIBILITY
-# ==========================================================
-
-print("\n" + "=" * 75)
-print("ENTERPRISE ACCESS CONTROL SYSTEM")
-print("=" * 75)
-
-# ----------------------------------------------------------
-# ADDITIONAL INPUTS
-# ----------------------------------------------------------
-
-attendance = float(input("Attendance Percentage           : "))
-
-performance_rating = float(
-    input("Performance Rating (1-5)         : ")
+admin_panel = (
+    employee_portal and
+    is_admin
 )
 
-nda_signed = (
-    input("NDA Signed? (yes/no)             : ")
-    .strip()
-    .lower() == "yes"
+secure_account = (
+    eligible_for_login and
+    is_two_factor_enabled
 )
 
-manager_approval = (
-    input("Manager Approval? (yes/no)       : ")
-    .strip()
-    .lower() == "yes"
-)
-
-medical_clearance = (
-    input("Medical Clearance? (yes/no)      : ")
-    .strip()
-    .lower() == "yes"
-)
-
-disciplinary_action = (
-    input("Any Disciplinary Action? (yes/no): ")
-    .strip()
-    .lower() == "yes"
-)
-
-# ----------------------------------------------------------
-# BOOLEAN DECISIONS
-# ----------------------------------------------------------
-
-attendance_ok = attendance >= 85
-
-performance_ok = performance_rating >= 4.0
-
-discipline_ok = not disciplinary_action
-
-# ----------------------------------------------------------
-# BUILDING ACCESS
-# ----------------------------------------------------------
-
-building_access = all([
-    identity_verified,
-    security_verified,
-    attendance_ok
-])
-
-# ----------------------------------------------------------
-# SERVER ROOM ACCESS
-# ----------------------------------------------------------
-
-server_room_access = all([
-    building_access,
-    nda_signed,
-    clearance_valid,
-    performance_ok
-])
-
-# ----------------------------------------------------------
-# VPN ACCESS
-# ----------------------------------------------------------
-
-vpn_access = all([
-    security_verified,
-    nda_signed,
-    manager_approval
-])
-
-# ----------------------------------------------------------
-# REMOTE WORK
-# ----------------------------------------------------------
-
-remote_work = all([
-    vpn_access,
-    attendance_ok,
-    performance_ok,
-    medical_clearance
-])
-
-# ----------------------------------------------------------
-# AI TEAM ELIGIBILITY
-# ----------------------------------------------------------
-
-ai_team = all([
-    department == "AI",
-    knows_python,
-    knows_sql,
-    knows_git,
-    experience >= 3,
-    performance_ok
-])
-
-# ----------------------------------------------------------
-# ML TEAM ELIGIBILITY
-# ----------------------------------------------------------
-
-ml_team = all([
-    department == "ML",
-    knows_python,
-    experience >= 2,
-    performance_ok
-])
-
-# ----------------------------------------------------------
-# DATA TEAM ELIGIBILITY
-# ----------------------------------------------------------
-
-data_team = all([
-    department == "DATA",
-    knows_python,
-    knows_sql
-])
-
-# ----------------------------------------------------------
-# PROJECT ASSIGNMENT
-# ----------------------------------------------------------
-
-project_assignment = any([
-    ai_team,
-    ml_team,
-    data_team
-])
-
-# ----------------------------------------------------------
-# HIGH SECURITY ACCESS
-# ----------------------------------------------------------
-
-high_security = all([
-    server_room_access,
-    security_clearance == "L3",
-    experience >= 5,
-    discipline_ok
-])
-
-# ----------------------------------------------------------
-# BOOLEAN REPORT
-# ----------------------------------------------------------
-
-print("\n" + "=" * 75)
-print("ACCESS CONTROL REPORT")
-print("=" * 75)
-
-print(f"Attendance Eligible           : {attendance_ok}")
-print(f"Performance Eligible          : {performance_ok}")
-print(f"Discipline Clear              : {discipline_ok}")
-
-print("-" * 75)
-
-print(f"Building Access               : {building_access}")
-print(f"Server Room Access            : {server_room_access}")
-print(f"VPN Access                    : {vpn_access}")
-print(f"Remote Work                   : {remote_work}")
-
-print("-" * 75)
-
-print(f"AI Team Eligible              : {ai_team}")
-print(f"ML Team Eligible              : {ml_team}")
-print(f"Data Team Eligible            : {data_team}")
-
-print("-" * 75)
-
-print(f"Project Assignment            : {project_assignment}")
-print(f"High Security Access          : {high_security}")
-
-# ----------------------------------------------------------
-# ACCESS SCORE
-# ----------------------------------------------------------
-
-access_score = sum([
-    attendance_ok,
-    performance_ok,
-    building_access,
-    server_room_access,
-    vpn_access,
-    remote_work,
-    project_assignment,
-    high_security
-])
-
-print("\n" + "=" * 75)
-print("ACCESS SCORE")
-print("=" * 75)
-
-print(f"Access Score : {access_score}/8")
-
-if access_score >= 7:
-    access_level = "LEVEL A"
-elif access_score >= 5:
-    access_level = "LEVEL B"
-elif access_score >= 3:
-    access_level = "LEVEL C"
-else:
-    access_level = "RESTRICTED"
-
-print(f"Assigned Access Level : {access_level}")
-
-# ==========================================================
-# PART 3 : PERFORMANCE, PROMOTION & RISK ANALYSIS
-# ==========================================================
-
-print("\n" + "=" * 75)
-print("PERFORMANCE & CAREER MANAGEMENT")
-print("=" * 75)
-
-# ----------------------------------------------------------
-# ADDITIONAL INPUTS
-# ----------------------------------------------------------
-
-projects_completed = int(
-    input("Projects Completed             : ")
-)
-
-certifications = int(
-    input("Professional Certifications    : ")
-)
-
-client_rating = float(
-    input("Client Rating (1-5)            : ")
-)
-
-team_player = (
-    input("Team Player? (yes/no)          : ")
-    .strip()
-    .lower() == "yes"
-)
-
-leadership_training = (
-    input("Leadership Training Completed? (yes/no): ")
-    .strip()
-    .lower() == "yes"
-)
-
-# ----------------------------------------------------------
-# PERFORMANCE VALIDATION
-# ----------------------------------------------------------
-
-projects_ok = projects_completed >= 5
-
-certification_ok = certifications >= 2
-
-client_rating_ok = client_rating >= 4.2
-
-leadership_ready = all([
-    leadership_training,
-    team_player,
-    performance_ok,
-    experience >= 5
-])
-
-# ----------------------------------------------------------
-# PROMOTION ELIGIBILITY
-# ----------------------------------------------------------
-
-promotion_eligible = all([
-    attendance_ok,
-    performance_ok,
-    projects_ok,
-    certification_ok,
-    discipline_ok,
-    leadership_ready
-])
-
-# ----------------------------------------------------------
-# BONUS ELIGIBILITY
-# ----------------------------------------------------------
-
-bonus_eligible = all([
-    attendance >= 95,
-    performance_rating >= 4.5,
-    client_rating_ok,
-    discipline_ok
-])
-
-# ----------------------------------------------------------
-# SALARY HIKE ELIGIBILITY
-# ----------------------------------------------------------
-
-salary_hike = any([
-    promotion_eligible,
-    bonus_eligible
-])
-
-# ----------------------------------------------------------
-# AI LEADERSHIP PROGRAM
-# ----------------------------------------------------------
-
-ai_leadership = all([
-    ai_team,
-    leadership_ready,
-    projects_completed >= 8,
-    certifications >= 3
-])
-
-# ----------------------------------------------------------
-# HIGH PERFORMER STATUS
-# ----------------------------------------------------------
-
-high_performer = all([
-    attendance >= 95,
-    performance_rating >= 4.8,
-    client_rating >= 4.8,
-    projects_completed >= 8
-])
-
-# ----------------------------------------------------------
-# RISK ANALYSIS
-# ----------------------------------------------------------
-
-high_risk = any([
-    disciplinary_action,
-    not background_verified,
-    blacklisted
-])
-
-medium_risk = any([
-    attendance < 85,
-    performance_rating < 3.5,
-    client_rating < 3.5
-])
-
-low_risk = not (
-    high_risk or medium_risk
-)
-
-# ----------------------------------------------------------
-# CAREER REPORT
-# ----------------------------------------------------------
-
-print("\n" + "=" * 75)
-print("CAREER EVALUATION REPORT")
-print("=" * 75)
-
-print(f"Projects Requirement Met       : {projects_ok}")
-print(f"Certification Requirement      : {certification_ok}")
-print(f"Client Rating Eligible         : {client_rating_ok}")
-print(f"Leadership Ready              : {leadership_ready}")
-
-print("-" * 75)
-
-print(f"Promotion Eligible            : {promotion_eligible}")
-print(f"Bonus Eligible                : {bonus_eligible}")
-print(f"Salary Hike Approved          : {salary_hike}")
-
-print("-" * 75)
-
-print(f"AI Leadership Eligible        : {ai_leadership}")
-print(f"High Performer                : {high_performer}")
-
-print("-" * 75)
-
-print(f"High Risk                     : {high_risk}")
-print(f"Medium Risk                   : {medium_risk}")
-print(f"Low Risk                      : {low_risk}")
-
-# ----------------------------------------------------------
-# PERFORMANCE SCORE
-# ----------------------------------------------------------
-
-career_score = sum([
-    projects_ok,
-    certification_ok,
-    client_rating_ok,
-    leadership_ready,
-    promotion_eligible,
-    bonus_eligible,
-    salary_hike,
-    ai_leadership,
-    high_performer,
-    low_risk
-])
-
-print("\n" + "=" * 75)
-print("CAREER SCORECARD")
-print("=" * 75)
-
-print(f"Career Score : {career_score}/10")
-
-if career_score >= 9:
-    grade = "Outstanding"
-elif career_score >= 7:
-    grade = "Excellent"
-elif career_score >= 5:
-    grade = "Good"
-else:
-    grade = "Needs Improvement"
-
-print(f"Overall Career Grade : {grade}")
-
-# ==========================================================
-# PART 4 : ENTERPRISE DASHBOARD & FINAL DECISION
-# ==========================================================
+# ------------------------------------------------------------------------------
+# VALIDATION REPORT
+# ------------------------------------------------------------------------------
 
 print("\n" + "=" * 80)
-print("ENTERPRISE DECISION DASHBOARD")
+print("ACCOUNT VALIDATION REPORT")
 print("=" * 80)
 
-# ----------------------------------------------------------
-# OVERALL SCORE
-# ----------------------------------------------------------
+print(f"Username Valid          : {username_valid}")
+print(f"Password Valid          : {password_valid}")
+print(f"Email Valid             : {email_valid}")
+print(f"Phone Valid             : {phone_valid}")
+print(f"Adult User              : {adult_user}")
 
-overall_score = (
-    compliance_score +
-    access_score +
-    career_score
+print("-" * 80)
+
+print(f"Eligible For Login      : {eligible_for_login}")
+print(f"Premium Access          : {premium_access}")
+print(f"Employee Portal Access  : {employee_portal}")
+print(f"Administrator Access    : {admin_panel}")
+print(f"Secure Account          : {secure_account}")
+
+print("-" * 80)
+
+print("Part 1 Completed Successfully.")
+
+# ==============================================================================
+# SECURITY SCORE
+# ==============================================================================
+
+security_score = 0
+
+if username_valid:
+    security_score += 1
+
+if password_valid:
+    security_score += 2
+
+if email_valid:
+    security_score += 1
+
+if phone_valid:
+    security_score += 1
+
+if is_email_verified:
+    security_score += 1
+
+if is_phone_verified:
+    security_score += 1
+
+if is_two_factor_enabled:
+    security_score += 2
+
+if is_registered:
+    security_score += 1
+
+# ==============================================================================
+# ACCOUNT RISK LEVEL
+# ==============================================================================
+
+if security_score >= 9:
+    risk_level = "Very Low"
+
+elif security_score >= 7:
+    risk_level = "Low"
+
+elif security_score >= 5:
+    risk_level = "Medium"
+
+else:
+    risk_level = "High"
+
+# ==============================================================================
+# FINAL LOGIN DECISION
+# ==============================================================================
+
+login_allowed = (
+    eligible_for_login and
+    not (
+        is_admin and
+        not is_two_factor_enabled
+    )
 )
 
-maximum_score = 28
+# ==============================================================================
+# SECURITY RECOMMENDATIONS
+# ==============================================================================
 
-percentage = (overall_score / maximum_score) * 100
+print("\n" + "=" * 80)
+print("SECURITY RECOMMENDATIONS")
+print("=" * 80)
 
-# ----------------------------------------------------------
-# FINAL HIRING DECISION
-# ----------------------------------------------------------
+if not username_valid:
+    print("• Username should contain at least 5 characters.")
 
-hiring_approved = all([
-    basic_eligibility,
-    project_assignment,
-    not high_risk
-])
+if not password_valid:
+    print("• Password should contain at least 8 characters.")
 
-# ----------------------------------------------------------
-# PROMOTION DECISION
-# ----------------------------------------------------------
+if not email_valid:
+    print("• Enter a valid email address.")
 
-promotion_approved = all([
-    promotion_eligible,
-    career_score >= 8
-])
+if not phone_valid:
+    print("• Enter a valid 10-digit phone number.")
 
-# ----------------------------------------------------------
-# BONUS DECISION
-# ----------------------------------------------------------
+if not is_email_verified:
+    print("• Verify your email address.")
 
-bonus_approved = all([
-    bonus_eligible,
-    career_score >= 7
-])
+if not is_phone_verified:
+    print("• Verify your phone number.")
 
-# ----------------------------------------------------------
-# REMOTE WORK DECISION
-# ----------------------------------------------------------
+if not is_two_factor_enabled:
+    print("• Enable Two-Factor Authentication.")
 
-remote_work_approved = all([
-    remote_work,
-    low_risk
-])
+if not is_registered:
+    print("• Complete account registration.")
 
-# ----------------------------------------------------------
-# SECURITY STATUS
-# ----------------------------------------------------------
+if is_admin and not is_two_factor_enabled:
+    print("• Administrator accounts must enable 2FA.")
 
-security_status = all([
-    building_access,
-    vpn_access,
-    security_verified
-])
+# ==============================================================================
+# ACCOUNT SUMMARY
+# ==============================================================================
 
-# ----------------------------------------------------------
-# EXECUTIVE GRADE
-# ----------------------------------------------------------
+print("\n" + "=" * 80)
+print("ACCOUNT SUMMARY")
+print("=" * 80)
 
-if percentage >= 90:
-    executive_grade = "A+"
-elif percentage >= 80:
-    executive_grade = "A"
-elif percentage >= 70:
-    executive_grade = "B"
-elif percentage >= 60:
-    executive_grade = "C"
+print(f"User Name              : {full_name}")
+print(f"Username               : {username}")
+print(f"Country                : {country}")
+print(f"Premium Member         : {is_premium_member}")
+print(f"Company Employee       : {is_employee}")
+print(f"Administrator          : {is_admin}")
+
+print("-" * 80)
+
+print(f"Security Score         : {security_score}/10")
+print(f"Risk Level             : {risk_level}")
+print(f"Secure Account         : {secure_account}")
+print(f"Login Allowed          : {login_allowed}")
+
+print("-" * 80)
+
+print(f"Premium Dashboard      : {premium_access}")
+print(f"Employee Portal        : {employee_portal}")
+print(f"Administrator Panel    : {admin_panel}")
+
+print("=" * 80)
+
+# ==============================================================================
+# FINAL MESSAGE
+# ==============================================================================
+
+if login_allowed:
+
+    print("✅ Login Successful!")
+
+    if secure_account:
+        print("Your account is well protected.")
+
+    else:
+        print("Login successful, but your account security can be improved.")
+
 else:
-    executive_grade = "D"
 
-# ----------------------------------------------------------
-# RECOMMENDATIONS
-# ----------------------------------------------------------
-
-recommendations = []
-
-if not knows_python:
-    recommendations.append("• Improve Python skills")
-
-if not knows_sql:
-    recommendations.append("• Improve SQL knowledge")
-
-if attendance < 90:
-    recommendations.append("• Improve attendance")
-
-if performance_rating < 4.5:
-    recommendations.append("• Improve performance rating")
-
-if certifications < 3:
-    recommendations.append("• Earn more professional certifications")
-
-if projects_completed < 8:
-    recommendations.append("• Complete more enterprise projects")
-
-if not leadership_training:
-    recommendations.append("• Attend leadership training")
-
-# ----------------------------------------------------------
-# EXECUTIVE REPORT
-# ----------------------------------------------------------
-
-print("\n")
-print("=" * 80)
-print("EXECUTIVE EMPLOYEE REPORT")
-print("=" * 80)
-
-print(f"Employee ID          : {employee_id}")
-print(f"Employee Name        : {employee_name}")
-print(f"Department           : {department}")
-print(f"Experience           : {experience} Years")
-
-print("-" * 80)
-
-print(f"Compliance Score     : {compliance_score}/10")
-print(f"Access Score         : {access_score}/8")
-print(f"Career Score         : {career_score}/10")
-
-print("-" * 80)
-
-print(f"Overall Score        : {overall_score}/{maximum_score}")
-print(f"Percentage           : {percentage:.2f}%")
-print(f"Executive Grade      : {executive_grade}")
-
-print("-" * 80)
-
-print(f"Hiring Approved      : {hiring_approved}")
-print(f"Promotion Approved   : {promotion_approved}")
-print(f"Bonus Approved       : {bonus_approved}")
-print(f"Remote Work          : {remote_work_approved}")
-print(f"Security Status      : {security_status}")
-
-print("-" * 80)
-
-print("RECOMMENDATIONS")
-
-if recommendations:
-    for recommendation in recommendations:
-        print(recommendation)
-else:
-    print("• No recommendations. Outstanding employee profile.")
-
-print("-" * 80)
-
-if percentage >= 90:
-    final_status = "EXCELLENT"
-elif percentage >= 80:
-    final_status = "VERY GOOD"
-elif percentage >= 70:
-    final_status = "GOOD"
-elif percentage >= 60:
-    final_status = "SATISFACTORY"
-else:
-    final_status = "NEEDS IMPROVEMENT"
-
-print(f"Final Status         : {final_status}")
+    print("❌ Login Failed!")
+    print("Please resolve the issues listed above before trying again.")
 
 print("=" * 80)
-print("SYSTEM EXECUTION COMPLETED SUCCESSFULLY")
+print("SMART LOGIN & ACCESS VERIFICATION COMPLETED")
 print("=" * 80)
-
-# ----------------------------------------------------------
-# BOOLEAN DEMONSTRATION
-# ----------------------------------------------------------
-
-print("\nBOOLEAN DEMONSTRATION")
-print("-" * 80)
-
-print("True + True + False =", True + True + False)
-print("bool(1)             =", bool(1))
-print("bool(0)             =", bool(0))
-print("bool('Python')      =", bool("Python"))
-print("bool('')            =", bool(""))
-print("bool([])            =", bool([]))
-print("bool([1, 2, 3])     =", bool([1, 2, 3]))
-
-print("\nThank you for using the Enterprise Employee Compliance & Access Management System.")
