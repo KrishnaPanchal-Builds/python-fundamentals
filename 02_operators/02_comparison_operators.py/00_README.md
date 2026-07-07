@@ -68,7 +68,7 @@ Comparison operators are widely used in:
 
 # 🚀 Mini Project
 
-## 👨‍🎓 SmartPhone Comparision Dashboard
+## 👨‍🎓 SmartPhone Comparison Dashboard
 
 This project demonstrates the practical use of Python
 comparison operators by comparing two smartphones based
