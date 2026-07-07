@@ -109,7 +109,6 @@ After completing this lesson, you will be able to:
 - `**` calculates the power of a number.
 - Arithmetic operators are fundamental to almost every Python application.
 
----
 
 <div align="center">
 
