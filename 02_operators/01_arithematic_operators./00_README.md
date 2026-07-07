@@ -49,7 +49,7 @@ After completing this lesson, you will be able to:
 | Program 7 | Area of a Rectangle Calculator |
 | Program 8 | Area of a Circle Calculator |
 | Program 9 | Simple Interest Calculator |
-| Program 10 | **Mini Project:** Smart Billing Calculator |
+| **Mini Project:** |  Smart Salary & Finance Analyser |
 
 ---
 
